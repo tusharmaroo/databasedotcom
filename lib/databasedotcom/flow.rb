@@ -1,6 +1,6 @@
 module Databasedotcom
   # A Salesforce API endpoint that can trigger predefinted flows in salesforce to kick off salesforce side processes.
-  # A flow can be triggered by its unique developer name and passed a hash of input variables.
+  # A flow can be triggered by its unique name and can be passed a hash of input variables.
 
   class Flow
     def initialize(client, flow_name, params = {}, options = {})

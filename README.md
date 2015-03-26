@@ -248,9 +248,9 @@ flow = Databasedotcom::Flow.new(client, flow_name, flow_paramaters)
 flow.run
 ```
 
-It triggers a post to ```/services/data/v32.0/actions/custom/flow/#{@flow_name}``` with the passed in paramaters.
+Executing ```run``` will trigger a post to ```/services/data/v32.0/actions/custom/flow/#{@flow_name}``` with the passed in paramaters.
 
-Configure the API version by passing it in as an option.
+You can configure the API version with the ```:version``` option:
 
 ```ruby
 flow = Databasedotcom::Flow.new(client, flow_name, flow_paramaters, {:version => '33.0')
