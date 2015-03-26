@@ -240,6 +240,23 @@ me.follow(you)                                            #=> start following a 
 
 See the [documentation](http://rubydoc.info/github/heroku/databasedotcom/master/frames) for full details.
 
+## Running a Salesforce Flow
+You can start Salesforce flows.
+
+```ruby
+flow = Databasedotcom::Flow.new(client, flow_name, flow_paramaters)
+flow.run
+```
+
+Executing ```run``` will trigger a post to ```/services/data/v32.0/actions/custom/flow/#{@flow_name}``` with the passed in paramaters.
+
+You can configure the API version with the ```:version``` option:
+
+```ruby
+flow = Databasedotcom::Flow.new(client, flow_name, flow_paramaters, {:version => '33.0')
+flow.run
+```
+
 # License
 
 This gem is licensed under the MIT License.
