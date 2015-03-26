@@ -1,0 +1,11 @@
+[{
+  "actionName": null,
+  "errors": [
+    {
+    "statusCode": "UNKNOWN_EXCEPTION",
+    "message": "The flow doesn't have a variable with the name foo, or the variable doesn't allow input access.",
+    "fields": []
+    }],
+  "isSuccess": false,
+  "outputValues": null
+}]

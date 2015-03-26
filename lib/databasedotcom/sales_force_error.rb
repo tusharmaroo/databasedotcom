@@ -11,8 +11,13 @@ module Databasedotcom
       parsed_body = JSON.parse(response.body) rescue nil
       if parsed_body
         if parsed_body.is_a?(Array)
-          message = parsed_body[0]["message"]
-          self.error_code = parsed_body[0]["errorCode"]
+          if parsed_body[0]["errors"]
+            message = parsed_body[0]["errors"][0]["message"]
+            self.error_code = parsed_body[0]["errors"][0]["statusCode"]
+          else
+            message = parsed_body[0]["message"]
+            self.error_code = parsed_body[0]["errorCode"]
+          end
         else
           message = parsed_body["error_description"]
           self.error_code = parsed_body["error"]
@@ -24,3 +29,5 @@ module Databasedotcom
     end
   end
 end
+
+# [{"actionName"=>nil, "errors"=>[{"statusCode"=>"UNKNOWN_EXCEPTION", "message"=>"The flow doesn't have a variable with the name foo, or the variable doesn't allow input access.", "fields"=>[]}], "isSuccess"=>false, "outputValues"=>nil}]
