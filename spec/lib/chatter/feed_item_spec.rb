@@ -28,7 +28,7 @@ describe Databasedotcom::Chatter::FeedItem do
       it "likes the feed item" do
         body = JSON.parse(File.read(File.join(File.dirname(__FILE__), "../../fixtures/chatter/likes_get_id_success_response.json")))
         @response = double("response")
-        @response.should_receive(:body).any_number_of_times.and_return(body)
+        expect(@response).to receive(:body).and_return(body)
         @client_mock.should_receive(:http_post).with("/services/data/v23/chatter/feed-items/#{@record.id}/likes").and_return(@response)
         like = @record.like
         like.should be_instance_of(Databasedotcom::Chatter::Like)
@@ -39,7 +39,7 @@ describe Databasedotcom::Chatter::FeedItem do
       it "comments on the feed item" do
         body = JSON.parse(File.read(File.join(File.dirname(__FILE__), "../../fixtures/chatter/comments_get_id_success_response.json")))
         @response = double("response")
-        @response.should_receive(:body).any_number_of_times.and_return(body)
+        expect(@response).to receive(:body).and_return(body)
         @client_mock.should_receive(:http_post).with("/services/data/v23/chatter/feed-items/#{@record.id}/comments", nil, :text => "whatever").and_return(@response)
         comment = @record.comment("whatever")
         comment.should be_instance_of(Databasedotcom::Chatter::Comment)
