@@ -11,6 +11,7 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://github.com/heroku/databasedotcom'
   s.summary     = %q{A ruby wrapper for the Force.com REST API}
   s.description = %q{A ruby wrapper for the Force.com REST API}
+  s.license     = 'MIT'
 
   s.rubyforge_project = 'databasedotcom'
 
