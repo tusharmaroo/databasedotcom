@@ -19,7 +19,7 @@ shared_examples_for("a restful resource") do
         body = File.read(File.join(File.dirname(__FILE__), "../../fixtures/chatter/#{described_class.resource_name}_get_id_success_response.json"))
         @client_mock = double("client", :version => "23")
         @response = double("response")
-        @response.should_receive(:body).any_number_of_times.and_return(body)
+        expect(@response).to receive(:body).and_return(body)
       end
 
       it "gets a resource by id" do
@@ -48,7 +48,7 @@ shared_examples_for("a restful resource") do
             body = File.read(File.join(File.dirname(__FILE__), "../../fixtures/chatter/#{described_class.resource_name}_batch_get_success_response.json"))
             @client_mock = double("client", :version => "23")
             @response = double("response")
-            @response.should_receive(:body).any_number_of_times.and_return(body)
+            expect(@response).to receive(:body).and_return(body)
           end
 
           it "gets all the resources" do
@@ -66,7 +66,7 @@ shared_examples_for("a restful resource") do
             body = File.read(File.join(File.dirname(__FILE__), "../../fixtures/chatter/#{described_class.resource_name}_batch_get_mixed_response.json"))
             @client_mock = double("client", :version => "23")
             @response = double("response")
-            @response.should_receive(:body).any_number_of_times.and_return(body)
+            expect(@response).to receive(:body).and_return(body)
           end
 
           it "gets all the users" do
@@ -86,7 +86,7 @@ shared_examples_for("a restful resource") do
         body = File.read(File.join(File.dirname(__FILE__), "../../fixtures/chatter/#{described_class.resource_name}_get_success_response.json"))
         @client_mock = double("client", :version => "23")
         @response = double("response")
-        @response.should_receive(:body).any_number_of_times.and_return(body)
+        expect(@response).to receive(:body).and_return(body)
       end
 
       it "gets a collection of resources" do

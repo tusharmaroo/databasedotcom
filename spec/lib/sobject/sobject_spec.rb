@@ -116,7 +116,7 @@ describe Databasedotcom::Sobject::Sobject do
       context "when the objects are different classes" do
 
         before do
-          @second = stub(:is_a? => false)
+          allow_message_expectations_on_nil
         end
 
         it "returns false" do
@@ -212,10 +212,10 @@ describe Databasedotcom::Sobject::Sobject do
 
     describe ".coerce_params" do
       it "coerces boolean attributes" do
-        TestClass.coerce_params("Checkbox_Field" => "1")["Checkbox_Field"].should be_true
-        TestClass.coerce_params("Checkbox_Field" => "0")["Checkbox_Field"].should be_false
-        TestClass.coerce_params("Checkbox_Field" => true)["Checkbox_Field"].should be_true
-        TestClass.coerce_params("Checkbox_Field" => false)["Checkbox_Field"].should be_false
+        TestClass.coerce_params("Checkbox_Field" => "1")["Checkbox_Field"].should be_truthy
+        TestClass.coerce_params("Checkbox_Field" => "0")["Checkbox_Field"].should be_falsey
+        TestClass.coerce_params("Checkbox_Field" => true)["Checkbox_Field"].should be_truthy
+        TestClass.coerce_params("Checkbox_Field" => false)["Checkbox_Field"].should be_falsey
       end
 
       it "coerces currency attributes" do
@@ -440,7 +440,7 @@ describe Databasedotcom::Sobject::Sobject do
 
           it "handles boolean values" do
             @client.should_receive(:query).with("SELECT #{@field_names.join(',')} FROM TestClass WHERE IsDeleted = false LIMIT 1").and_return(nil)
-            TestClass.find_or_initialize_by_IsDeleted(false).IsDeleted.should be_false
+            TestClass.find_or_initialize_by_IsDeleted(false).IsDeleted.should be_falsey
           end
 
           it "handles numeric values" do
@@ -493,7 +493,7 @@ describe Databasedotcom::Sobject::Sobject do
             result = TestClass.find_or_initialize_by_Name("Name" => 'Richard', "Email_Field" => "foo@bar.com", "IsDeleted" => false)
             result.Name.should == "Richard"
             result.Email_Field.should == "foo@bar.com"
-            result.IsDeleted.should be_false
+            result.IsDeleted.should be_falsey
           end
         end
       end
@@ -532,7 +532,7 @@ describe Databasedotcom::Sobject::Sobject do
 
         it "includes only the createable attributes" do
           @client.should_receive(:create) do |clazz, attrs|
-            attrs.all? {|attr, value| TestClass.createable?(attr).should be_true}
+            attrs.all? {|attr, value| TestClass.createable?(attr).should be_truthy}
             @obj_double
           end
 
@@ -561,7 +561,7 @@ describe Databasedotcom::Sobject::Sobject do
 
         it "includes only the updateable attributes" do
           @client.should_receive(:update) do |clazz, id, attrs|
-            attrs.all? {|attr, value| TestClass.updateable?(attr).should be_true}
+            attrs.all? {|attr, value| TestClass.updateable?(attr).should be_truthy}
           end
 
           @obj.save
@@ -578,8 +578,8 @@ describe Databasedotcom::Sobject::Sobject do
 
         it "remove any listed fields from the attributes on create" do
           @client.should_receive(:create) do |clazz, attrs|
-            attrs.include?("Name").should be_false
-            attrs.include?("OwnerId").should be_true
+            attrs.include?("Name").should be_falsey
+            attrs.include?("OwnerId").should be_truthy
             @obj_double
           end
           
@@ -590,8 +590,8 @@ describe Databasedotcom::Sobject::Sobject do
           @obj.Id = "foo"
           
           @client.should_receive(:update) do |clazz, id, attrs|
-            attrs.include?("Name").should be_false
-            attrs.include?("OwnerId").should be_true
+            attrs.include?("Name").should be_falsey
+            attrs.include?("OwnerId").should be_truthy
           end
           
           result = @obj.save(:exclusions => ["Name"])
@@ -672,8 +672,8 @@ describe Databasedotcom::Sobject::Sobject do
 
     describe ".updateable?" do
       it "returns the updateable flag for an attribute" do
-        TestClass.updateable?("Picklist_Field").should be_true
-        TestClass.updateable?("Id").should be_false
+        TestClass.updateable?("Picklist_Field").should be_truthy
+        TestClass.updateable?("Id").should be_falsey
       end
 
       it "raises ArgumentError for unknown attributes" do
@@ -685,8 +685,8 @@ describe Databasedotcom::Sobject::Sobject do
 
     describe ".createable?" do
       it "returns the createable flag for an attribute" do
-        TestClass.createable?("IsDeleted").should be_false
-        TestClass.createable?("Picklist_Field").should be_true
+        TestClass.createable?("IsDeleted").should be_falsey
+        TestClass.createable?("Picklist_Field").should be_truthy
       end
 
       it "raises ArgumentError for unknown attributes" do

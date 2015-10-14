@@ -26,11 +26,11 @@ describe Databasedotcom::Collection do
 
   describe "#next_page?" do
     it "returns true if a next page url exists" do
-      @collection.next_page?.should be_true
+      @collection.next_page?.should be_truthy
     end
 
     it "returns false if no next page url exists" do
-      Databasedotcom::Collection.new(@client_mock, 10).next_page?.should be_false
+      Databasedotcom::Collection.new(@client_mock, 10).next_page?.should be_falsey
     end
   end
 
@@ -56,11 +56,11 @@ describe Databasedotcom::Collection do
 
   describe "#previous_page?" do
     it "returns true if a previous page url exists" do
-      @collection.previous_page?.should be_true
+      @collection.previous_page?.should be_truthy
     end
 
     it "returns false if no previous page url exists" do
-      Databasedotcom::Collection.new(@client_mock, 10).previous_page?.should be_false
+      Databasedotcom::Collection.new(@client_mock, 10).previous_page?.should be_falsey
     end
   end
 

@@ -34,7 +34,7 @@ describe Databasedotcom::Client do
         @client.client_id.should == "client_id"
         @client.client_secret.should == "client_secret"
         @client.host.should == "foo.bar"
-        @client.debugging.should be_true
+        @client.debugging.should be_truthy
         @client.version.should == '99'
         @client.sobject_module.should == "Databasedotcom::Sobject"
         @client.ca_file.should == "ca/file.cert"
@@ -60,7 +60,7 @@ describe Databasedotcom::Client do
         client = Databasedotcom::Client.new(File.join(File.dirname(__FILE__), "../fixtures/databasedotcom.yml"))
         client.client_id.should == "client_id"
         client.client_secret.should == "client_secret"
-        client.debugging.should be_true
+        client.debugging.should be_truthy
         client.host.should == "bro.baz"
         client.version.should == '88'
         client.ca_file.should == "other/ca/file.cert"
@@ -73,7 +73,7 @@ describe Databasedotcom::Client do
         client = Databasedotcom::Client.new("client_id" => "client_id", "client_secret" => "client_secret", "debugging" => true, "host" => "foo.baz", "version" => "77", "ca_file" => "alt/ca/file.cert", "verify_mode" => 3)
         client.client_id.should == "client_id"
         client.client_secret.should == "client_secret"
-        client.debugging.should be_true
+        client.debugging.should be_truthy
         client.host.should == "foo.baz"
         client.version.should == "77"
         client.ca_file.should == "alt/ca/file.cert"
@@ -84,7 +84,7 @@ describe Databasedotcom::Client do
         client = Databasedotcom::Client.new(:client_id => "client_id", :client_secret => "client_secret", :debugging => true, :host => "foo.baz", :version => "77", :ca_file => "alt/ca/file.cert", :verify_mode => 3)
         client.client_id.should == "client_id"
         client.client_secret.should == "client_secret"
-        client.debugging.should be_true
+        client.debugging.should be_truthy
         client.host.should == "foo.baz"
         client.version.should == "77"
         client.ca_file.should == "alt/ca/file.cert"
@@ -102,7 +102,7 @@ describe Databasedotcom::Client do
       end
 
       it "defaults to no debugging output" do
-        @client.debugging.should be_false
+        @client.debugging.should be_falsey
       end
 
       it "defaults to no special ca file" do
@@ -366,7 +366,7 @@ describe Databasedotcom::Client do
 
         it "returns an array of hashes listing the properties for available sobjects with a given version" do
           @client.describe_sobjects.first["name"].should == "Account"
-          @client.describe_sobjects.first["createable"].should be_true
+          @client.describe_sobjects.first["createable"].should be_truthy
         end
       end
 
@@ -692,7 +692,7 @@ describe Databasedotcom::Client do
 
           it "fills in the attributes of the returned objects with the values returned from the query" do
             results = @client.query("SELECT Checkbox_Label FROM Whizbang")
-            results.first.Checkbox_Field.should be_false
+            results.first.Checkbox_Field.should be_falsey
             results.first.Text_Field.should == "Hi there!"
           end
 
@@ -723,7 +723,7 @@ describe Databasedotcom::Client do
             @first_page_results.length.should == 1
             @first_page_results.total_size.should == 2
             @first_page_results.first.Text_Field.should == "First Page"
-            @first_page_results.next_page?.should be_true
+            @first_page_results.next_page?.should be_truthy
           end
 
           it "retrieves the next page of records when requested" do
@@ -731,7 +731,7 @@ describe Databasedotcom::Client do
             next_results.length.should == 1
             next_results.total_size.should == 2
             next_results.first.Text_Field.should == "Last Page"
-            next_results.next_page?.should be_false
+            next_results.next_page?.should be_falsey
           end
         end
 
@@ -880,7 +880,7 @@ describe Databasedotcom::Client do
               @client.update("Whizbang", "rid", {:Name => "update"})
               WebMock.should have_requested(:patch, "https://na1.salesforce.com/services/data/v23.0/sobjects/Whizbang/rid")
             end
-            
+
             it "applies type coercions before serializing" do
               stub_request(:patch, "https://na1.salesforce.com/services/data/v23.0/sobjects/Whizbang/rid").to_return(:body => nil, :status => 204)
               @client.update("Whizbang", "rid", "Date_Field" => Date.civil(2011, 1, 1), "DateTime_Field" => DateTime.civil(2011, 2, 1, 12), "Picklist_Multiselect_Field" => %w(a b))
@@ -998,7 +998,7 @@ describe Databasedotcom::Client do
             @client.should_receive(:find).with("Whizbang", "bar").and_return(MySobjects::Whizbang.new)
             results = @client.search("foo")
             results.should be_instance_of(Databasedotcom::Collection)
-            results.next_page?.should be_false
+            results.next_page?.should be_falsey
             WebMock.should have_requested(:get, "https://na1.salesforce.com/services/data/v23.0/search?q=foo")
           end
         end
