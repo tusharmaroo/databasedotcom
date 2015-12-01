@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.authors     = ['Glenn Gillen, Danny Burkes & Richard Zhao']
   s.email       = ['me@glenngillen.com']
   s.homepage    = 'https://github.com/heroku/databasedotcom'
-  s.summary     = %q{A ruby wrapper for the Force.com REST API}
-  s.description = %q{A ruby wrapper for the Force.com REST API}
+  s.summary     = %q{[DEPRECATED] A ruby wrapper for the Force.com REST API}
+  s.description = %q{[DEPRECATED] A ruby wrapper for the Force.com REST API.\nTry restforce instead: https://github.com/ejholmes/restforce}
   s.license     = 'MIT'
 
   s.rubyforge_project = 'databasedotcom'
