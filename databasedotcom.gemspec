@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email       = ['me@glenngillen.com']
   s.homepage    = 'https://github.com/heroku/databasedotcom'
   s.summary     = %q{[DEPRECATED] A ruby wrapper for the Force.com REST API}
-  s.description = %q{[DEPRECATED] A ruby wrapper for the Force.com REST API.\nTry restforce instead: https://github.com/ejholmes/restforce}
+  s.description = %q{[DEPRECATED] A ruby wrapper for the Force.com REST API. Try restforce instead: https://github.com/ejholmes/restforce}
   s.license     = 'MIT'
 
   s.rubyforge_project = 'databasedotcom'
