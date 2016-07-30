@@ -205,6 +205,13 @@ module Databasedotcom
       collection_from(result.body)
     end
 
+    # Returns raw output from the _soql_expr_, which is a valid SOQL[http://www.salesforce.com/us/developer/docs/api/Content/sforce_api_calls_soql.htm] expression. The objects will only be populated with the values of attributes specified in the query.
+    #
+    #    client.cust_query("SELECT Name FROM Account") #=> [#<Account @Id=nil, @Name="Foo", ...>, #<Account @Id=nil, @Name="Bar", ...> ...]
+    def cust_query(soql_expr)
+      result = http_get("/services/data/v#{self.version}/query", :q => soql_expr)
+    end
+
     # Returns a Collection of Sobject instances form the results of the SOSL[http://www.salesforce.com/us/developer/docs/api/Content/sforce_api_calls_sosl.htm] search.
     #
     #    client.search("FIND {bar}") #=> [#<Account @Name="foobar", ...>, #<Account @Name="barfoo", ...> ...]
